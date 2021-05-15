@@ -6,7 +6,7 @@ import platform
 import config
 import phrases
 
-
+# '<OS name> <version>をプレイ中'
 client = discord.Client(activity=discord.Game(
     name=platform.system() + ' ' + platform.release()))
 
@@ -24,5 +24,6 @@ async def on_message(message):
     # Good Morning
     if 'おはよ' in message.content:
         await message.channel.send(phrases.goodMorning)
+        print('sent goodMorning.')
 
 client.run(config.TOKEN)
