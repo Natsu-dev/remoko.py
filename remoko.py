@@ -1,6 +1,11 @@
+# Packages
 import discord
-import config
 import platform
+
+# Custom Libraries
+import config
+import phrases
+
 
 client = discord.Client(activity=discord.Game(
     name=platform.system() + ' ' + platform.release()))
@@ -18,6 +23,6 @@ async def on_message(message):
 
     # Good Morning
     if 'おはよ' in message.content:
-        await message.channel.send('おはよー！')
+        await message.channel.send(phrases.goodMorning)
 
 client.run(config.TOKEN)
