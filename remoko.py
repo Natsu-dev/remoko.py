@@ -1,11 +1,15 @@
 import discord
 import config
+import platform
 
-client = discord.Client()
+client = discord.Client(activity=discord.Game(
+    name=platform.system() + ' ' + platform.release()))
+
 
 @client.event
 async def on_ready():
     print('ready...')
+
 
 @client.event
 async def on_message(message):
