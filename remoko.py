@@ -25,5 +25,13 @@ async def on_message(message):
     if 'おはよ' in message.content:
         await message.channel.send(phrases.goodMorning)
         print('sent goodMorning.')
+        return
+
+    # Commands
+    if message.content.startswith('remoko'):
+        l = message.content.split()
+        await message.channel.send(l)
+        print('command split test')
+        return
 
 client.run(config.TOKEN)
