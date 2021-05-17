@@ -15,6 +15,8 @@ client = discord.Client(activity=discord.Game(
 async def on_ready():
     print('ready...')
 
+# def commandSwitch(l):
+#     if l[0] == 
 
 @client.event
 async def on_message(message):
@@ -29,7 +31,8 @@ async def on_message(message):
 
     # Commands
     if message.content.startswith('remoko'):
-        l = message.content.split()
+        l = message.content.split()[1:]
+
         await message.channel.send(l)
         print('command split test')
         return
