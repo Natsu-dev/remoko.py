@@ -22,8 +22,8 @@ def piStatus(l):
     if bool(l[1:]) == False:
         print('Command > pi')
         temp = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
-        clock = str(round(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1])/1000000000, 3))+'GHz'
+        clock = '{0:.2f}'.format(float(subprocess.getoutput(
+            'vcgencmd measure_clock arm').split('=')[1])/1000000000)+'GHz'
         volt = subprocess.getoutput(
             'vcgencmd measure_volts core').split('=')[1]
         mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
@@ -35,8 +35,8 @@ def piStatus(l):
 
     elif l[1] == 'clock':
         print('Command > pi clock')
-        status = str(round(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1])/1000000000, 3))+'GHz'
+        status = '{0:.2f}'.format(float(subprocess.getoutput(
+            'vcgencmd measure_clock arm').split('=')[1])/1000000000)+'GHz'
 
     elif l[1] == 'volt':
         print('Command > pi volt')
