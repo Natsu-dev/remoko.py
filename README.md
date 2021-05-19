@@ -12,6 +12,7 @@ Run the commands below.
 - `pip install python-dotenv`
 
 Edit `.env.sample` and rename it `.env`.
+
 Run `python remoko.py`.
 
 ### Raspberry Pi with Raspbian
@@ -21,4 +22,5 @@ Run the commands below.
 - `sudo pip3 install python-dotenv`
 
 Edit `.env.sample` and rename it `.env`.
+
 Run `python3 remoko.py`.
