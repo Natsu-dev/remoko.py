@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 # Packages
 import discord
 import platform
@@ -8,8 +10,6 @@ import subprocess
 # Custom Libraries
 import config
 import phrases
-
-# coding: UTF-8
 
 # '<OS name> <version>をプレイ中'
 client = discord.Client(activity=discord.Game(
