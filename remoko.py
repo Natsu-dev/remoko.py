@@ -15,44 +15,45 @@ import phrases
 client = discord.Client(activity=discord.Game(
     name=platform.system() + ' ' + platform.release()))
 
+
 # ラズパイのハードウェア情報を出すコマンド
-
-
 def piStatus(l):
     if bool(l[1:]) == False:
         print('Command > pi')
         temp = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
         clock = '{0:.2f}'.format(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1])/1000000000)+'GHz'
+            'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
         volt = subprocess.getoutput(
             'vcgencmd measure_volts core').split('=')[1]
-        mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
-        return [temp, clock, volt, mem]
+        mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1] + 'B'
+        return phrases.statusAll.format(temp, clock, volt, mem)
 
     if l[1] == 'temp':
         print('Command > pi temp')
         status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
+        return phrases.statusTemp.format(status)
 
     elif l[1] == 'clock':
         print('Command > pi clock')
         status = '{0:.2f}'.format(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1])/1000000000)+'GHz'
+            'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
+        return phrases.statusClock.format(status)
 
     elif l[1] == 'volt':
         print('Command > pi volt')
         status = subprocess.getoutput(
             'vcgencmd measure_volts core').split('=')[1]
+        return phrases.statusVolt.format(status)
 
     elif l[1] == 'mem':
         print('Command > pi mem')
-        status = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
+        status = subprocess.getoutput(
+            'vcgencmd get_mem arm').split('=')[1] + 'B'
+        return phrases.statusMem.format(status)
 
     else:
         print('Unknown args after "pi".')
-        status = phrases.invalidArg
-
-    return status
-
+        return phrases.invalidArg
 
 @client.event
 async def on_ready():
@@ -85,5 +86,6 @@ async def on_message(message):
             await message.channel.send(l)
             print('command split test')
         return
+
 
 client.run(config.TOKEN)
