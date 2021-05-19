@@ -18,7 +18,7 @@ Run `python remoko.py`.
 
 Run the commands below.
 - `pip3 install discord.py`
-- `pip3 install python-dotenv`
+- `sudo pip3 install python-dotenv`
 
 Edit `.env.sample` and rename it `.env`.
 Run `python3 remoko.py`.
