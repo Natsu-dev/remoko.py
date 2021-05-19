@@ -27,7 +27,7 @@ def piStatus(l):
         status += '\n' + \
             subprocess.getoutput('vcgencmd measure_volts core').split('=')[1]
         status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_mem arm').split('=')[1]
+            subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
         return status
 
     if l[1] == 'temp':
@@ -46,7 +46,7 @@ def piStatus(l):
 
     elif l[1] == 'mem':
         print('Command > pi mem')
-        status = subprocess.getoutput('vcgencmd measure_mem arm').split('=')[1]
+        status = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
 
     else:
         print('Unknown args after "pi".')
