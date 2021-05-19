@@ -21,14 +21,13 @@ client = discord.Client(activity=discord.Game(
 def piStatus(l):
     if bool(l[1:]) == False:
         print('Command > pi')
-        status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_clock arm').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_volts core').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
-        return status
+        temp = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
+        clock = str(round(float(subprocess.getoutput(
+            'vcgencmd measure_clock arm').split('=')[1])/1000000000, 3))+'GHz'
+        volt = subprocess.getoutput(
+            'vcgencmd measure_volts core').split('=')[1]
+        mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1]
+        return [temp, clock, volt, mem]
 
     if l[1] == 'temp':
         print('Command > pi temp')
@@ -36,8 +35,8 @@ def piStatus(l):
 
     elif l[1] == 'clock':
         print('Command > pi clock')
-        status = subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1]
+        status = str(round(float(subprocess.getoutput(
+            'vcgencmd measure_clock arm').split('=')[1])/1000000000, 3))+'GHz'
 
     elif l[1] == 'volt':
         print('Command > pi volt')
