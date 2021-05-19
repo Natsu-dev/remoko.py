@@ -9,6 +9,8 @@ import subprocess
 import config
 import phrases
 
+# coding: UTF-8
+
 # '<OS name> <version>をプレイ中'
 client = discord.Client(activity=discord.Game(
     name=platform.system() + ' ' + platform.release()))
