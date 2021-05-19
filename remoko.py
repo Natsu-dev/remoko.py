@@ -19,6 +19,17 @@ client = discord.Client(activity=discord.Game(
 
 
 def piStatus(l):
+    if bool(l[1:]) == False:
+        print('Command > pi')
+        status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
+        status += '\n' + \
+            subprocess.getoutput('vcgencmd measure_clock arm').split('=')[1]
+        status += '\n' + \
+            subprocess.getoutput('vcgencmd measure_volts core').split('=')[1]
+        status += '\n' + \
+            subprocess.getoutput('vcgencmd measure_mem arm').split('=')[1]
+        return status
+
     if l[1] == 'temp':
         print('Command > pi temp')
         status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
@@ -37,25 +48,16 @@ def piStatus(l):
         print('Command > pi mem')
         status = subprocess.getoutput('vcgencmd measure_mem arm').split('=')[1]
 
-    else:  # show all
-        print('Command > pi')
-
-        if bool(l[2:]):
-            print('Unknown args after "pi".')
-
-        status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_clock arm').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_volts core').split('=')[1]
-        status += '\n' + \
-            subprocess.getoutput('vcgencmd measure_mem arm').split('=')[1]
+    else:
+        print('Unknown args after "pi".')
+        status = phrases.invalidArg
 
     return status
 
 
 @client.event
 async def on_ready():
+
     print('ready...')
 
 # def commandSwitch(l):
