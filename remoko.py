@@ -9,7 +9,7 @@ import os
 import subprocess
 
 # Custom Libraries
-import config
+import loadenv
 import phrases
 import reversi
 
@@ -111,4 +111,4 @@ async def on_message(message):
         return
 
 
-client.run(config.TOKEN)
+client.run(loadenv.TOKEN)
