@@ -8,6 +8,9 @@ import random
 import os
 import subprocess
 
+import binascii
+import socket
+
 # Custom Libraries
 import loadenv
 import phrases
@@ -58,6 +61,24 @@ def piStatus(l):
         return phrases.invalidArg
 
 
+# from: https://emptypage.jp/gadgets/wol.html
+def sendWol(macs, ipaddr, port):
+    print('Command > wol')
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
+    for mac in macs:
+        for sep in ':-':
+            if sep in mac:
+                mac = ''.join([x.rjust(2, '0') for x in mac.split(sep)])
+                break
+        mac = mac.rjust(12, '0')
+        p = '\xff' * 6 + binascii.unhexlify(mac) * 16
+        s.sendto(p, (ipaddr, port))
+    s.close()
+    print('sent magic packet.')
+
+
 @client.event
 async def on_ready():
 
@@ -86,6 +107,9 @@ async def on_message(message):
             status = piStatus(l)
             await message.channel.send(status)
             print('command pi sent.')
+
+        elif l[0] == 'wol':
+            sendWol(loadenv.ADDRESS, loadenv.IP, 9)
 
         elif l[0] == 'reversi':
             b = ""
