@@ -3,6 +3,7 @@
 # Packages
 import discord
 import platform
+import random
 
 import os
 import subprocess
@@ -55,6 +56,9 @@ def piStatus(l):
         print('Unknown args after "pi".')
         return phrases.invalidArg
 
+def playReversi(turn):
+    print('start playing reversi.')
+
 @client.event
 async def on_ready():
 
@@ -82,6 +86,18 @@ async def on_message(message):
         if l[0] == 'pi':
             status = piStatus(l)
             await message.channel.send(status)
+            print('command pi sent.')
+
+        elif l[0] == 'reversi':
+            if l[1] == 'b':
+                message.channel.send(phrases.reversiReady.format(message.author.name, '黒'))
+                playReversi(True)
+            elif l[1] == 'w':
+                playReversi(False)
+            else:
+                b = bool(random.getrandbits(1))
+                playReversi(b)
+
         else:
             await message.channel.send(l)
             print('command split test')
