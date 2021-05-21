@@ -11,6 +11,7 @@ import subprocess
 # Custom Libraries
 import config
 import phrases
+import reversi
 
 # '<OS name> <version>をプレイ中'
 client = discord.Client(activity=discord.Game(
@@ -56,8 +57,6 @@ def piStatus(l):
         print('Unknown args after "pi".')
         return phrases.invalidArg
 
-def playReversi(turn):
-    print('start playing reversi.')
 
 @client.event
 async def on_ready():
@@ -89,14 +88,22 @@ async def on_message(message):
             print('command pi sent.')
 
         elif l[0] == 'reversi':
-            if l[1] == 'b':
-                message.channel.send(phrases.reversiReady.format(message.author.name, '黒'))
-                playReversi(True)
-            elif l[1] == 'w':
-                playReversi(False)
+            b = ""
+            if bool(l[1]) and (l[1] == 'b'):
+                b = True
+            elif bool(l[1]) and (l[1] == 'w'):
+                b = False
             else:
                 b = bool(random.getrandbits(1))
-                playReversi(b)
+
+            if b:
+                message.channel.send(
+                    phrases.reversiReady.format(message.author.name, '黒'))
+            else:
+                message.channel.send(
+                    phrases.reversiReady.format(message.author.name, '白'))
+
+            reversi.playReversi(b)
 
         else:
             await message.channel.send(l)
