@@ -124,13 +124,13 @@ async def on_message(message):
                 b = bool(random.getrandbits(1))
 
             if b:
-                message.channel.send(
+                await message.channel.send(
                     phrases.reversiReady.format(message.author.name, '黒'))
             else:
-                message.channel.send(
+                await message.channel.send(
                     phrases.reversiReady.format(message.author.name, '白'))
 
-            reversi.playReversi(b)
+            await message.channel.send (reversi.playReversi(b))
 
         # The Others
         else:
