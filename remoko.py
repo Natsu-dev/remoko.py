@@ -103,14 +103,17 @@ async def on_message(message):
     if message.content.startswith('remoko'):
         l = message.content.split()[1:]
 
+        # Show Raspberry Pi Status
         if l[0] == 'pi':
             status = piStatus(l)
             await message.channel.send(status)
             print('command pi sent.')
 
+        # Wake on LAN
         elif l[0] == 'wol':
             sendWol(loadenv.ADDRESS, loadenv.IP, 9)
 
+        #Reversi
         elif l[0] == 'reversi':
             b = ""
             if bool(l[1]) and (l[1] == 'b'):
@@ -129,6 +132,7 @@ async def on_message(message):
 
             reversi.playReversi(b)
 
+        # The Others
         else:
             await message.channel.send(l)
             print('command split test')
