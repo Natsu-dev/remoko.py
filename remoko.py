@@ -116,9 +116,11 @@ async def on_message(message):
         #Reversi
         elif l[0] == 'reversi':
             b = ""
-            if bool(l[1]) and (l[1] == 'b'):
+            if bool(l[1:]) == False:
+                b = bool(random.getrandbits(1))
+            elif l[1] == 'b':
                 b = True
-            elif bool(l[1]) and (l[1] == 'w'):
+            elif l[1] == 'w':
                 b = False
             else:
                 b = bool(random.getrandbits(1))
