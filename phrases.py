@@ -1,6 +1,9 @@
 # Good Morning
 goodMorning = 'おはよー！'
 
+# Love
+love = 'あたしもすきだよ'
+
 # commands
 invalidArg = 'ねー、コマンドの引数間違ってない？'
 invalidCom = 'ねー、コマンド間違ってない？'

@@ -99,6 +99,12 @@ async def on_message(message):
         print('sent goodMorning.')
         return
 
+    # Love
+    if 'すき' in message.content:
+        await message.channel.send(phrases.love)
+        print('sent love.')
+        return
+
     # Commands
     if message.content.startswith('remoko'):
         l = message.content.split()[1:]
