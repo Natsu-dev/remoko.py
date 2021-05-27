@@ -143,6 +143,7 @@ async def on_message(message):
         # The Others
         else:
             await message.channel.send(l)
+            await message.channel.send(phrases.invalidCom)
             print('command split test')
         return
 
