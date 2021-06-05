@@ -1,2 +1,0 @@
-# command symbol
-commandSymbol = 'remoko'
