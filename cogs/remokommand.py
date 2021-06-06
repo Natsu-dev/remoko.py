@@ -1,17 +1,22 @@
 from discord.ext import commands
 import phrases
 
-# For pi command
+# For pi Command
 import subprocess
 
-# For sendwol command
+# For sendwol Command
 import binascii
 import socket
 
+# For reversi Command
+import random
+
 # Custom Libraries
 import loadenv
+import reversi
 
-# from: https://emptypage.jp/gadgets/wol.html
+
+# From: https://emptypage.jp/gadgets/wol.html
 def sendWol(macs, ipaddr, port):
     print('Command > wol')
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -28,6 +33,7 @@ def sendWol(macs, ipaddr, port):
     print('sent magic packet.')
     return 0
 
+
 class remokommand(commands.Cog):
 
     # コンストラクタ: インスタンス生成時に1回だけ呼び出し
@@ -40,7 +46,6 @@ class remokommand(commands.Cog):
         await ctx.send(phrases.testPhrase)
         print('Inf: Sent the test phrase.')
 
-
     @commands.group()
     async def pi(self, ctx):
         if ctx.invoked_subcommand is None:
@@ -48,10 +53,11 @@ class remokommand(commands.Cog):
             print('Command > pi')
             temp = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
             clock = '{0:.2f}'.format(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
+                'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
             volt = subprocess.getoutput(
-            'vcgencmd measure_volts core').split('=')[1]
-            mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1] + 'B'
+                'vcgencmd measure_volts core').split('=')[1]
+            mem = subprocess.getoutput(
+                'vcgencmd get_mem arm').split('=')[1] + 'B'
 
             await ctx.send(phrases.statusAll.format(temp, clock, volt, mem))
             print('Inf: Replied to Command > pi')
@@ -91,6 +97,35 @@ class remokommand(commands.Cog):
             await ctx.send(phrases.wolSuccess)
         else:
             await ctx.send(phrases.wolFailure)
+
+
+    @commands.group()
+    async def reversi(self, ctx):
+        if ctx.invoked_subcommand is None:
+            b = bool(random.getrandbits(1))
+
+        if b:
+            await ctx.send(
+                phrases.reversiReady.format(ctx.author.name, '黒'))
+        else:
+            await ctx.send(
+                phrases.reversiReady.format(ctx.author.name, '白'))
+        await ctx.send(reversi.playReversi(b))
+
+    @reversi.command()
+    async def b(self, ctx):
+        b = True
+        await ctx.send(
+            phrases.reversiReady.format(ctx.author.name, '黒'))
+        await ctx.send(reversi.playReversi(b))
+
+    @reversi.command()
+    async def w(self, ctx):
+        b = False
+        await ctx.send(
+            phrases.reversiReady.format(ctx.author.name, '白'))
+        await ctx.send(reversi.playReversi(b))
+
 
 def setup(bot):
     bot.add_cog(remokommand(bot))
