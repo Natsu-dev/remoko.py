@@ -6,9 +6,6 @@ from discord.ext import commands
 import platform
 import random
 
-import os
-import subprocess
-
 import binascii
 import socket
 
@@ -29,47 +26,6 @@ class MyBot(commands.Bot):
         print('USER: ' + self.user.name)
         print('ID: ' + self.user.id)
         print('ready...')
-
-
-# ラズパイのハードウェア情報を出すコマンド
-def piStatus(l):
-    if bool(l[1:]) == False:
-        print('Command > pi')
-        temp = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
-        clock = '{0:.2f}'.format(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
-        volt = subprocess.getoutput(
-            'vcgencmd measure_volts core').split('=')[1]
-        mem = subprocess.getoutput('vcgencmd get_mem arm').split('=')[1] + 'B'
-        return phrases.statusAll.format(temp, clock, volt, mem)
-
-    if l[1] == 'temp':
-        print('Command > pi temp')
-        status = subprocess.getoutput('vcgencmd measure_temp').split('=')[1]
-        return phrases.statusTemp.format(status)
-
-    elif l[1] == 'clock':
-        print('Command > pi clock')
-        status = '{0:.2f}'.format(float(subprocess.getoutput(
-            'vcgencmd measure_clock arm').split('=')[1]) / 1000000000) + 'GHz'
-        return phrases.statusClock.format(status)
-
-    elif l[1] == 'volt':
-        print('Command > pi volt')
-        status = subprocess.getoutput(
-            'vcgencmd measure_volts core').split('=')[1]
-        return phrases.statusVolt.format(status)
-
-    elif l[1] == 'mem':
-        print('Command > pi mem')
-        status = subprocess.getoutput(
-            'vcgencmd get_mem arm').split('=')[1] + 'B'
-        return phrases.statusMem.format(status)
-
-    else:
-        print('Unknown args after "pi".')
-        return phrases.invalidArg
-
 
 # from: https://emptypage.jp/gadgets/wol.html
 def sendWol(macs, ipaddr, port):
@@ -113,14 +69,8 @@ async def on_message(message):
     if message.content.startswith('remoko'):
         l = message.content.split()[1:]
 
-        # Show Raspberry Pi Status
-        if l[0] == 'pi':
-            status = piStatus(l)
-            await message.channel.send(status)
-            print('command pi sent.')
-
         # Wake on LAN
-        elif l[0] == 'wol':
+        if l[0] == 'wol':
             sendWol(loadenv.ADDRESS, loadenv.IP, 9)
 
         #Reversi

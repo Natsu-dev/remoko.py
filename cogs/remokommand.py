@@ -48,3 +48,10 @@ class remokommand(commands.Cog):
             'vcgencmd measure_volts core').split('=')[1]
         await ctx.send(phrases.statusVolt.format(status))
         print('Inf: Replied to Command > pi volt')
+
+    @pi.command()
+    async def mem(self, ctx):
+        status = subprocess.getoutput(
+            'vcgencmd get_mem arm').split('=')[1] + 'B'
+        await ctx.send(phrases.statusMem.format(status))
+        print('Inf: Replied to Command > pi mem')
