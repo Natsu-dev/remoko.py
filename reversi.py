@@ -1,4 +1,4 @@
-def showField(l, fieldStr):
+def getField(l, fieldStr):
     field = ""
     fieldStr = ""
     for n in l:
@@ -31,4 +31,4 @@ def playReversi(turn):
     fieldInt[36] = 1
     fieldInt[35] = 2
 
-    return showField(fieldInt, fieldStr)
+    return getField(fieldInt, fieldStr)
